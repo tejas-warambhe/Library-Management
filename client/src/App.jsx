@@ -8,6 +8,7 @@ import {
 import "./App.css";
 import Books from "./components/Books";
 import Login from "./components/Login";
+import ManageLibrary from "./components/ManageLibrary";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
 import Student from "./components/Student";
@@ -86,6 +87,17 @@ function App() {
             element={
               isAuthenticated ? (
                 <Books setAuth={setAuth} />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/manage"
+            element={
+              isAuthenticated ? (
+                <ManageLibrary setAuth={setAuth} />
               ) : (
                 <Navigate to="/" />
               )

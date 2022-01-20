@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const pool = require('../models/student');
+const librarian = require('../models/librarian');
 const router = Router();
 const bycrypt = require('bcrypt');
 const jwtGenerator = require('../utils/jwtGenerator');
@@ -12,7 +12,7 @@ router.post("/register", validInfo, async(request, response) => {
 
         const { name, email, password } = request.body;
 
-        const user = await pool.findOne({ email: email });
+        const user = await librarian.findOne({ email: email });
 
         console.log(user, "i was here");
 
@@ -28,7 +28,7 @@ router.post("/register", validInfo, async(request, response) => {
         const bycryptPassword = await bycrypt.hash(password, generateSalt);
 
 
-        const newUser = new pool({
+        const newUser = new librarian({
             name: name,
             email: email,
             password: bycryptPassword
@@ -49,8 +49,8 @@ router.post('/login', validInfo, async(request, response) => {
     try {
         const { email, password } = request.body;
 
-        // const user = await pool.query('SELECT * FROM users WHERE user_email = $1', [email]);
-        const user = await pool.findOne({ email: email })
+
+        const user = await librarian.findOne({ email: email })
             //check if user exists
         if (user === null) {
             return response.status(401).send("Email or Password Incorrect");
