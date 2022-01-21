@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import IndividualStudent from "./Individual/IndividualStudent";
-// import ImageInput from './ImageInput';
+import ImageInput from './ImageInput';
 export default function Student() {
   const [Students, setStudents] = useState([]);
+  const [imageUrl, setimageUrl] = useState("");
   const [inputs, setinputs] = useState({
     name: "",
     classSection: "",
+    imageUrl: imageUrl
   });
   const addStudent = async (e) => {
     e.preventDefault();
 
     const { name, classSection } = inputs;
     // const class = classSection;
-    const body = { name, classSection };
+    const body = { name, classSection, imageUrl };
     const response = await fetch("http://localhost:5000/addstudent", {
       method: "POST",
       headers: {
@@ -45,6 +47,7 @@ export default function Student() {
     setinputs({
       name: "",
       classSection: "",
+      imageUrl: imageUrl
     });
   };
   useEffect(() => {
@@ -53,6 +56,11 @@ export default function Student() {
    
   }, []);
   
+  const handleImage = (url) =>{
+    console.log(url, "here");
+    setimageUrl(url);
+  }
+
   return (
     <div className="container">
       <form
@@ -92,9 +100,15 @@ export default function Student() {
               className="form-control"
               id="inputPassword3"
               placeholder="Enter Class"
-              value={inputs.classSection}
+              value={inputs.classSection} 
               onChange={(e) => onChange(e)}
             />
+          </div>
+        </div>
+        <div className="form-group row">
+          
+          <div className="col-sm-10">
+            <ImageInput handleImage={handleImage}/>                 
           </div>
         </div>
 
@@ -119,7 +133,7 @@ export default function Student() {
       </form>
       <div className="container">
         {Students.map((Element, key) =>{
-        return  <IndividualStudent name={Element.name} classSection={Element.classSection} uid={Element._id}fetchStudents={() => fetchStudents()} key={key}/>
+        return  <IndividualStudent imageUrl={Element.imageUrl} name={Element.name} classSection={Element.classSection} uid={Element._id}fetchStudents={() => fetchStudents()} key={key}/>
         })}
       </div>
     </div>

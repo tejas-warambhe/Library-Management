@@ -12,6 +12,9 @@ const student = new mongoose.Schema({
     classSection: {
         type: String,
 
+    },
+    imageUrl: {
+        type: String,
     }
     // imagePath: {
     //     type: String,

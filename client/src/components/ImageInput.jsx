@@ -1,40 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-/**
- * Component to handle file upload. Works for image
- * uploads, but can be edited to work for any file.
- */
-function FileUpload() {
-  // State to store uploaded file
-  const [file, setFile] = React.useState("");
+const UploadAndDisplayImage = ({handleImage}) => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [current, setcurrent] = useState("");
+  console.log(current);
 
-  // Handles file upload event and updates state
-  function handleUpload(event) {
-    setFile(event.target.files[0]);
-    console.log(event.target);
-    // Add code here to upload file to server
-    // ...
-  }
-
+  handleImage(current);
+  
+    
   return (
-    <div id="upload-box">
-      <input type="file" onChange={handleUpload} />
-      <p>Filename: {file.name}</p>
-      <p>File type: {file.type}</p>
-      <p>File size: {file.path} bytes</p>
-      {file && <ImageThumb image={file} />}
+    <div className="container">
+     
+      {selectedImage && (                                 
+        <div>
+        <img alt="not fount" width={"250px"} src={URL.createObjectURL(selectedImage)}/>
+        <br />
+        <button className = "btn btn-primary">Remove</button>
+        </div>
+      )}
+      <br />
+     
+      <br /> 
+      <input
+        type="file"
+        name="myImage"
+        className="button btn btn-primary"
+        onChange={(event) => {            
+          setcurrent(URL.createObjectURL(event.target.files[0]));
+          setSelectedImage(event.target.files[0]);
+          
+        }}
+      />
     </div>
   );
-}
-
-/**
- * Component to display thumbnail of image.
- */
-const ImageThumb = ({ image }) => {
-  return <img src={URL.createObjectURL(image)} alt={image.name} />;
 };
 
-
-export default function App() {
-  return <FileUpload />;
-}
+export default UploadAndDisplayImage;

@@ -26,7 +26,7 @@ export default function Navbar(props) {
         <Link className="nav-link" to="/manage">Manage <span className="sr-only">(current)</span></Link>
       </li>
     </ul>
-    <span class="navbar-text">
+    <span className="navbar-text">
     <Link className="nav-link" to="/login" onClick={(e) => clearLocal(e)}>Logout <span className="sr-only">(current)</span></Link>
     </span>
     

@@ -40,16 +40,17 @@ router.get('/books', authorisation, async(req, res) => {
 router.post('/addstudent', authorisation, async(req, res) => {
 
     try {
-        const { name, classSection } = req.body;
+        const { name, classSection, imageUrl } = req.body;
 
         const response = new student({
             uid: req.user.id,
             name: name,
-            classSection: classSection
+            classSection: classSection,
+            imageUrl: imageUrl
         });
 
         const parseRes = await response.save();
-        console.log(parseRes);
+
         res.json(parseRes);
 
     } catch (err) {
@@ -110,10 +111,10 @@ router.put('/updatebook/:id', authorisation, async(req, res) => {
 
 router.put('/updatestudent/:id', authorisation, async(req, res) => {
     const { id } = req.params;
-    const { name, classSection } = req.body;
+    const { name, classSection, imageUrl } = req.body;
     try {
         const filter = { _id: id };
-        const update = { name: name, classSection: classSection };
+        const update = { name: name, classSection: classSection, imageUrl: imageUrl };
 
         // `doc` is the document _after_ `update` was applied because of
         // `new: true`
